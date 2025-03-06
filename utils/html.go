@@ -1,6 +1,8 @@
 package utils
 
-import "golang.org/x/net/html"
+import (
+	"golang.org/x/net/html"
+)
 
 func FindHref(n *html.Node, val string) string {
 	if n.Type == html.ElementNode && n.Data == "a" {
@@ -60,8 +62,8 @@ func GetAttr(n *html.Node, key string) string {
 }
 
 func GetTitle(n *html.Node) string {
-	if n.Type == html.ElementNode && n.DataAtom.String() == "title" {
-		return n.Data
+	if n.Type == html.ElementNode && n.DataAtom.String() == "title" && n.FirstChild != nil {
+		return n.FirstChild.Data
 	}
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		if htmlK := GetTitle(c); htmlK != "" {
